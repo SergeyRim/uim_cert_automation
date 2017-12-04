@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="UIM Cert testing" >
+    <listeners>
+        <listener class-name="uim.ScreenshotListener"/>
+    </listeners>
+
+    <!-- Driver parameter values: "Firefox", "Chrome", "IE" OR "RemoteFirefox", "RemoteChrome"  -->
+    <!-- logLevel parameter values: "INFO", "DEBUG", "ERROR"                                    -->
+    <parameter name="logLevel" value="INFO"/>
+    <parameter name="Driver" value="Firefox"/>
+    <parameter name="RemoteDriverURL" value="http://10.242.23.195:4444/wd/hub"/>
+
+    <!-- =================================================== -->
+    <!-- Parameter "simIDs" format: "zone:id1,zone:id2", for example "public:12345" or "portsmouth:12345"/>  -->
+    <!-- =================================================== -->
+
+    <parameter name="uimServer" value="http://rimse01-F2941" />
+    <!--<parameter name="uimServer" value="http://kucya01-F2257" />-->
+
+     <!--=================================================== -->
+     <!--UPDATE DCD -->
+     <!--=================================================== -->
+
+    <test name="Update DCD">
+        <groups> <run>
+            <include name="UpdateDCD"/>
+        </run></groups>
+        <classes> <class name="uim.TestCase1" /> </classes>
+    </test>
+ 
+ 
+</suite>

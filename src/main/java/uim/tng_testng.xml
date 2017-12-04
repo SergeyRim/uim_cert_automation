@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="UIM Cert testing" >
+    <listeners>
+        <listener class-name="uim.ScreenshotListener"/>
+    </listeners>
+
+    <!-- Driver parameter values: "Firefox", "Chrome", "IE" OR "RemoteFirefox", "RemoteChrome"  -->
+    <!-- logLevel parameter values: "INFO", "DEBUG", "ERROR"                                    -->
+    <parameter name="logLevel" value="DEBUG"/>
+    <parameter name="Driver" value="RemoteFirefox"/>
+    <parameter name="RemoteDriverURL" value="http://10.242.23.195:4444/wd/hub"/>
+
+    <!-- =================================================== -->
+    <!-- Parameter "simIDs" format: "zone:id1,zone:id2", for example "public:12345" or "portsmouth:12345"/>  -->
+    <!-- =================================================== -->
+
+
+    <!--<parameter name="uimServer" value="http://rimse01-F7394" />-->
+    <parameter name="uimServer" value="http://rimse01-F2941" />
+    <!--<parameter name="uimServer" value="http://kucya01-F2257" />-->
+
+    <parameter name="simIDs" value="public:30555"/>
+    <!--<parameter name="uimServer" value="http://rimse01-T3306" />-->
+    <parameter name="readmeFile" value="d:\UIM\mfvc.txt" />
+    <parameter name="excelFile" value="d:\UIM\Handover_Spreadsheet.xlsx" />
+
+    <!-- =================================================== -->
+    <!-- CREATE DISCOVER PROFILE -->
+    <!-- =================================================== -->
+
+    <test name="Create Discovery Profile">
+        <groups> <run>
+    	<include name="CreateDiscoveryProfile"/>
+        </run></groups>
+       <classes> <class name="uim.TestCase1" /> </classes>
+    </test>
+
+    <!-- =================================================== -->
+    <!-- VERIFY NEWLY CERTIFIED MF/VC -->
+
+    <!-- =================================================== -->
+
+    <!--<test name="Verify Newly Added MF/VC">-->
+        <!--<groups> <run>-->
+    	    <!--<include name="NewVCMF"/>-->
+        <!--</run></groups>-->
+        <!--<classes> <class name="uim.TestCase1" /> </classes>-->
+    <!--</test>-->
+
+
+    <!-- =================================================== -->
+    <!-- VERIFY ALREADY CERTIFIED MF/VC -->
+    <!-- =================================================== -->
+
+    <!--<test name="Verify MF/VC Already Certified">-->
+        <!--<groups> <run>-->
+            <!--<include name="VerifyAlreadyCertified"/>-->
+        <!--</run></groups>-->
+        <!--<classes> <class name="uim.TestCase1" /> </classes>-->
+    <!--</test>-->
+
+
+     <!--=================================================== -->
+     <!--UPDATE DCD -->
+     <!--=================================================== -->
+
+    <!--<test name="Update DCD">-->
+        <!--<groups> <run>-->
+            <!--<include name="UpdateDCD"/>-->
+        <!--</run></groups>-->
+        <!--<classes> <class name="uim.TestCase1" /> </classes>-->
+    <!--</test>-->
+ 
+ 
+</suite>
