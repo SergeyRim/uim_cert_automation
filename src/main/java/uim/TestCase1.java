@@ -42,7 +42,7 @@ public class TestCase1 {
 	@Parameters({"Driver", "RemoteDriverURL", "logLevel"})
 	public void beforeSetup(String browserDriver, @Optional("http://127.0.0.1:4444/wd/hub") String RemoteDriverURL, @Optional("") String logLevel) throws MalformedURLException {
 
-		log.info("UIM Cert Automation Testing, version 2.5 (build 16112017)");
+		log.info("UIM Cert Automation Testing, version 2.6 (build 26022018)");
 		if (!logLevel.equals("") && !logLevel.toLowerCase().equals("info")) {
 
 			LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
@@ -53,6 +53,8 @@ public class TestCase1 {
 				case "debug":	log.info("Changing log level to DEBUG according to XML file configuration.");
 								loggerConfig.setLevel(Level.DEBUG);
 								ctx.updateLoggers();
+								//Bypass debug output for org.apache.http logger
+								org.apache.logging.log4j.core.config.Configurator.setLevel("org.apache.http",Level.WARN);
 								break;
 				case "error":	log.info("Changing log level to ERROR according to XML file configuration.");
 								loggerConfig.setLevel(Level.ERROR);
