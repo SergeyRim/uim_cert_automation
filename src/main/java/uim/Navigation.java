@@ -4,6 +4,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Optional;
 
 import java.io.File;
@@ -14,9 +17,12 @@ public class Navigation {
 	private static final Logger log = LogManager.getLogger("Navigation");
 	
 	WebDriver driver;
+	WebDriverWait wait;
 	
 	public Navigation (WebDriver driver) {
+
 		this.driver = driver;
+		wait = new WebDriverWait(driver,20);
 	}
 	
 	protected WebElement getWebElement (String xpath) throws InterruptedException {
@@ -143,26 +149,30 @@ public class Navigation {
 	public void gotoArchive () throws InterruptedException {
 
 		log.debug("Go to Archive.");
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Archive']")));
+		Thread.sleep(500);
 		WebElement navi = getWebElement("//input[@value='Archive']");
 		navi.click();
-
 	}
 
 	public void gotoSNMPCollectorProbe (String uimServer) throws InterruptedException {
 
 		log.debug("Select \"Robots\" tab.");
-		getWebElement("//input[@id='btnRobotsTab']").click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='btnRobotsTab']"))).click();
 		Thread.sleep(500);
 
 		log.debug("Click on \""+uimServer+"\" robot.");
-		getWebElement("//td[@class='name' and text()='"+uimServer+"']").click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='name' and text()='"+uimServer+"']"))).click();
+
+
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='name' and text()='"+uimServer+"']"))).click();
 		Thread.sleep(200);
 
 		//getWebElement("//td[@title='"+uimServer+"' and @data-column='name']").click();
 		//Thread.sleep(500);
 
 		log.debug("Click on \"Probes\" tab.");
-		getWebElement("//input[@id='btnProbesTab' and @title='Probes']").click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='btnProbesTab' and @title='Probes']"))).click();
 		Thread.sleep(500);
 
 		log.debug("Search for \"snmpcollector\" probe.");

@@ -8,7 +8,7 @@
     <!-- Driver parameter values: "Firefox", "Chrome", "IE" OR "RemoteFirefox", "RemoteChrome"  -->
     <!-- logLevel parameter values: "INFO", "DEBUG", "ERROR"                                    -->
     <parameter name="logLevel" value="DEBUG"/>
-    <parameter name="Driver" value="RemoteFirefox"/>
+    <parameter name="Driver" value="Firefox"/>
     <parameter name="RemoteDriverURL" value="http://10.242.23.195:4444/wd/hub"/>
 
     <!-- =================================================== -->
@@ -17,10 +17,10 @@
 
 
     <!--<parameter name="uimServer" value="http://rimse01-F7394" />-->
-    <parameter name="uimServer" value="http://rimse01-F2941" />
+    <parameter name="uimServer" value="http://rimse01-F7394" />
     <!--<parameter name="uimServer" value="http://kucya01-F2257" />-->
 
-    <parameter name="simIDs" value="public:30555"/>
+    <parameter name="simIDs" value="public:31249"/>
     <!--<parameter name="uimServer" value="http://rimse01-T3306" />-->
     <parameter name="readmeFile" value="d:\UIM\mfvc.txt" />
     <parameter name="excelFile" value="d:\UIM\Handover_Spreadsheet.xlsx" />
@@ -29,12 +29,12 @@
     <!-- CREATE DISCOVER PROFILE -->
     <!-- =================================================== -->
 
-    <test name="Create Discovery Profile">
-        <groups> <run>
-    	<include name="CreateDiscoveryProfile"/>
-        </run></groups>
-       <classes> <class name="uim.TestCase1" /> </classes>
-    </test>
+    <!--<test name="Create Discovery Profile">-->
+        <!--<groups> <run>-->
+    	<!--<include name="CreateDiscoveryProfile"/>-->
+        <!--</run></groups>-->
+       <!--<classes> <class name="uim.TestCase1" /> </classes>-->
+    <!--</test>-->
 
     <!-- =================================================== -->
     <!-- VERIFY NEWLY CERTIFIED MF/VC -->
@@ -53,12 +53,12 @@
     <!-- VERIFY ALREADY CERTIFIED MF/VC -->
     <!-- =================================================== -->
 
-    <!--<test name="Verify MF/VC Already Certified">-->
-        <!--<groups> <run>-->
-            <!--<include name="VerifyAlreadyCertified"/>-->
-        <!--</run></groups>-->
-        <!--<classes> <class name="uim.TestCase1" /> </classes>-->
-    <!--</test>-->
+    <test name="Verify MF/VC Already Certified">
+        <groups> <run>
+            <include name="VerifyAlreadyCertified"/>
+        </run></groups>
+        <classes> <class name="uim.TestCase1" /> </classes>
+    </test>
 
 
      <!--=================================================== -->

@@ -18,6 +18,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
@@ -42,7 +43,7 @@ public class TestCase1 {
 	@Parameters({"Driver", "RemoteDriverURL", "logLevel"})
 	public void beforeSetup(String browserDriver, @Optional("http://127.0.0.1:4444/wd/hub") String RemoteDriverURL, @Optional("") String logLevel) throws MalformedURLException {
 
-		log.info("UIM Cert Automation Testing, version 2.6 (build 26022018)");
+		log.info("UIM Cert Automation Testing, version 3.0 (build 05042018)");
 		if (!logLevel.equals("") && !logLevel.toLowerCase().equals("info")) {
 
 			LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
@@ -69,24 +70,27 @@ public class TestCase1 {
 		DesiredCapabilities dc = new DesiredCapabilities();
 		Map<String, Object> prefs = new HashMap<String, Object>();
 		FirefoxProfile profile = new FirefoxProfile();
+		FirefoxOptions options = new FirefoxOptions();
+		ChromeOptions chromeOptions = new ChromeOptions();
 
 		String downloadedPath = System.getProperty("user.dir");
 
 		switch (browserDriver.toLowerCase()) {
-			case "firefox":			profile.setPreference("browser.download.folderList",2);
+			case "firefox":			System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
+									profile.setPreference("browser.download.folderList",2);
 									profile.setPreference("browser.download.manager.showWhenStarting",false);
 									profile.setPreference("browser.download.dir",downloadedPath);
 									profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/zip");
-									driver = new FirefoxDriver(profile);
+									options.setProfile(profile);
+									driver = new FirefoxDriver(options);
 									driver.manage().window().maximize();
 									break;
 
-			case "chrome":			ChromeOptions options = new ChromeOptions();
-									options.setExperimentalOption("prefs", prefs);
-									options.addArguments("--disable-extensions");
+			case "chrome":			chromeOptions.setExperimentalOption("prefs", prefs);
+									chromeOptions.addArguments("--disable-extensions");
 									prefs.put("download.default_directory", downloadedPath);
 									dc.setBrowserName("chrome");
-									dc.setCapability(ChromeOptions.CAPABILITY, options);
+									dc.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 									driver = new ChromeDriver(dc);
 									driver.manage().window().maximize();
 									break;
@@ -108,7 +112,6 @@ public class TestCase1 {
 			case "remotechrome"  :	dc.setBrowserName("chrome");
 									prefs.put("download.default_directory", "/home/downloads/");
 									dc.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
-									ChromeOptions chromeOptions = new ChromeOptions();
 									chromeOptions.setExperimentalOption("prefs", prefs);
 									chromeOptions.addArguments("--disable-extensions");
 									chromeOptions.addArguments("--headless");
@@ -124,7 +127,8 @@ public class TestCase1 {
 									profile.setPreference("browser.download.manager.showWhenStarting",false);
 									profile.setPreference("browser.download.dir","d:\\1");
 									profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/zip");
-									driver = new FirefoxDriver(profile);
+									options.setProfile(profile);
+									driver = new FirefoxDriver(options);
 									driver.manage().window().maximize();
 									break;
 		}

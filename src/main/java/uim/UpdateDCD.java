@@ -3,6 +3,9 @@ package uim;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.io.File;
@@ -17,15 +20,18 @@ public class UpdateDCD {
     private static final Logger log = LogManager.getLogger("Navigation");
 
     WebDriver driver;
+    WebDriverWait wait;
 
     public UpdateDCD (WebDriver driver) {
+
         this.driver = driver;
+        wait = new WebDriverWait(driver,20);
     }
 
     public static class CustomAuthenticator extends Authenticator {
         protected PasswordAuthentication getPasswordAuthentication() {
             String username = "rimse01";
-            String password = "6MiniBar34";
+            String password = "6MiniBar37";
             return new PasswordAuthentication(username, password.toCharArray());
         }
     }
@@ -39,7 +45,7 @@ public class UpdateDCD {
         log.info("Loggin in to TeamCity.");
         driver.get("http://build.dev.fco/teamcity/viewType.html?buildTypeId=Uim_Snmpc_SnmpDeviceCertificationDeployer_SnmpDeviceCertificationDeployer");
         driver.findElement(By.id("username")).sendKeys("rimse01");
-        driver.findElement(By.id("password")).sendKeys("6MiniBar36");
+        driver.findElement(By.id("password")).sendKeys("6MiniBar37");
         driver.findElement(By.xpath("//input[@class='btn loginButton']")).click();
 
         log.debug("Wait while page will be loaded.");
@@ -191,19 +197,19 @@ public class UpdateDCD {
         navi.gotoSNMPCollectorProbe(uimServer);
 
         log.debug("Execute SNMPcollector menu page.");
-        navi.getWebElement("//input[@class='tableRowMenu outlineOnHoverFocus round']").click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@class='tableRowMenu outlineOnHoverFocus round']"))).click();
         Thread.sleep(500);
 
         log.info("Deactivating \"snmpcollector\" probe. Please wait.");
-        navi.getWebElement("//span[text()='Deactivate']").click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Deactivate']"))).click();
 
         navi.waitForElement("//td[@class='status hub-status-gray' and @title='Deactivated']",1, 0);
         log.info("snmpcollector probe deactivated. Starting probe...");
 
         log.debug("Execute SNMPcollector menu page.");
-        navi.getWebElement("//input[@class='tableRowMenu outlineOnHoverFocus round']").click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@class='tableRowMenu outlineOnHoverFocus round']"))).click();
         Thread.sleep(500);
-        navi.getWebElement("//span[text()='Activate']").click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Activate']"))).click();
 
         navi.waitForElement("//td[@class='status hub-status-green' and @title='Running']",1, 0);
         log.info("snmpcollector probe succesfully activated.");

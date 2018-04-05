@@ -57,21 +57,21 @@ public class SnmpCollector {
 		for (int i=0; i<metricsList.size(); i++) {
 			
 			isVcFound = false;
-			//Look for Metric Family by link in mib format
+			log.debug("Looking for Metric Family by link in mib format.");
 			List<WebElement> mfMib = driver.findElements(By.xpath("//tr[contains(@id,'.DevId"+metricsList.get(i).get(1)[0]+"')]"));
 			if (mfMib.size()==0) {
 				log.fatal("MF \""+metricsList.get(i).get(1)[0]+"\" not found.");
 				continue;
 			}
 			
-			//If found required MF, click on it
+			log.debug("If found required MF, click on it.");
 			mfMib.get(0).click();
 			Thread.sleep(500);
 			
-			//Wait for "Loading..." message
+			log.debug("Wait for \"Loading...\" message");
 			navi.waitForElement("//div[contains(text(),'Loading')]", 2,0);
 			
-			//Get the Metric Family display name and compare it with HR format from readme
+			log.debug("Get the Metric Family display name and compare it with HR format from readme.");
 			do {
 				try {
 					isDone=true;
@@ -90,20 +90,22 @@ public class SnmpCollector {
 			}
 			
 			//Search for the required VC element
-			//Get the list of elements from table
+			log.debug("Get the list of elements from table");
 			List<WebElement> elements = driver.findElements(By.xpath("//table[@class='dataTable']/tbody[@role='alert']/tr"));
 			
-			//Click on elements and check they VC
+			log.debug("Click on elements and check they VC.");
 			String element_name = new String();
 			for (int k=0;k<elements.size();k++) {
-				//Scroll to element for each 3rd line
 				if (k % 5 == 0) {
-					je.executeScript("arguments[0].scrollIntoView(true);",elements.get(k));					
+					log.debug("Scroll to element for each 5th line.");
+					je.executeScript("arguments[0].scrollIntoView(true);",elements.get(k));
 				}
-				//Click on element
-				elements.get(k).click();
+				log.debug("Click on element " + elements.get(k));
+				//Needs to click on child ./td[1] element instead of parent element "elements.get(k)"
+				elements.get(k).findElement(By.xpath("./td[1]")).click();
+
 				Thread.sleep(200);
-				//Get VC in mib format
+				log.debug("Get VC in mib format.");
 				do {
 					try {
 						isDone=true;
@@ -116,9 +118,9 @@ public class SnmpCollector {
 				} while (!isDone);
 				
 				
-				//Compare VC mib with required VC mib
+				log.debug("Compare VC mib with required VC mib.");
 				if (vcMib.equals(metricsList.get(i).get(0)[0])) {
-					//Get Label (element name)
+					log.debug("Get Label (element name).");
 					element_name = navi.getWebElement("//input[@name='Names']").getAttribute("value");
 					log.info("Found \""+vcMib+"\" VC for \""+metricsList.get(i).get(1)[1]+"\" MF with element: \""+element_name+"\"");
 					isVcFound = true;
@@ -126,35 +128,35 @@ public class SnmpCollector {
 				} 
 			}
 			
-			// If no required VC is found, just skip this cycle
+			log.debug("If no required VC is found, just skip this cycle.");
 			if (!isVcFound) {
 				log.error("VC \""+metricsList.get(i).get(0)[0]+"\" not found.");
 				navi.findDevice(simID);
 				continue;
 			}
 			
-			//Click on element
+			log.debug("Click on element.");
 			//WebElement clickOnElement = navi.getWebElement("//div[text()='"+element_name+"']");
 			WebElement clickOnElement = navi.getWebElement("//tr[starts-with(@id,'snmpcollector:snmpcollector:snmpcollector')]/.//div[text()='"+element_name+"']");
 			clickOnElement.click();
 			Thread.sleep(500);
 			navi.waitForElement("//div[contains(text(),'Loading')]", 2,0);
 			
-			//Enable reporting data for metrics
+			log.debug("Enable reporting data for metrics.");
 			for (int j=2; j<metricsList.get(i).size();j++) {
 				
-				//Check if QOS_ metric exists
+				log.debug("Check if QOS_ metric exists.");
 				if (driver.findElements(By.xpath("//tr/td[4 and text()='"+metricsList.get(i).get(j)[1]+"']")).size()>0) {
 					
-					//Click on QOS_ metric
+					log.debug("Click on QOS_ metric.");
 					WebElement currentMetric = navi.getWebElement("//tr/td[4 and text()='"+metricsList.get(i).get(j)[1]+"']");
 					currentMetric.click();
 					
-					//Wait while correct page will be loading
+					log.debug("Wait while correct page will be loading.");
 					navi.waitForElement("//label[text()='"+metricsList.get(i).get(j)[1]+"']", 1,0);
 					Thread.sleep(500);
 					
-					//Verify if checkbox not checked
+					log.debug("Verify if checkbox not checked.");
 					if (driver.findElements(By.xpath("//label[text()='Publish Data']/../div[1][@class='icheckbox checked']")).size()==0) {
 						WebElement publishData = navi.getWebElement("//label[text()='Publish Data']/../div[1]");
 						publishData.click();
@@ -173,15 +175,15 @@ public class SnmpCollector {
 			}
 			
 			Thread.sleep(500);
-			//Check if Save button disabled or not
+			log.debug("Check if Save button disabled or not.");
 			if (driver.findElements(By.xpath("//button[@id='saveBtn' and @aria-disabled='false']")).size()>0) {
-				//Click on Save button
+				log.debug("Click on Save button.");
 				WebElement saveButton = navi.getWebElement("//button[@id='saveBtn']");
 				saveButton.click();
 			
 				navi.waitForElement("//div[contains(text(),'Saving')]", 2,0);
 
-				//Click on OK button
+				log.debug("Click on OK button.");
 				saveButton = navi.getWebElement("//button[@name='ok']");
 				saveButton.click();
 			}
@@ -252,7 +254,8 @@ public class SnmpCollector {
 					//Scroll to element
 					je.executeScript("arguments[0].scrollIntoView(true);",elements.get(k));
 					//Click on element
-					elements.get(k).click();
+					//elements.get(k).click();
+					elements.get(k).findElement(By.xpath("./td[1]")).click();
 					Thread.sleep(200);
 					
 					//Get VC in mib format

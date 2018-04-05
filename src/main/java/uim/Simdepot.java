@@ -51,6 +51,7 @@ public class Simdepot {
 			searchField.clear();
 			searchField.sendKeys(sim_zone_ip[1]);
 			searchField.sendKeys(Keys.ENTER);
+			Thread.sleep(1000);
 
 			driver.switchTo().defaultContent();
 			driver.switchTo().frame("present_selection");

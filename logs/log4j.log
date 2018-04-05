@@ -1,0 +1,7 @@
+2018-04-05 10:27:26 [INFO ] TestCase1 - UIM Cert Automation Testing, version 2.6 (build 26022018)
+2018-04-05 10:27:26 [INFO ] TestCase1 - Changing log level to DEBUG according to XML file configuration.
+2018-04-05 10:27:43 [INFO ] SnmpCollector - Vendor: Harris
+2018-04-05 10:27:43 [INFO ] SnmpCollector - Model: Harris Constellation
+2018-04-05 10:27:45 [INFO ] SnmpCollector - Found "IsdnModemMib" VC for "Generic Modem" MF with element: "Isdn Modem1"
+2018-04-05 10:27:46 [INFO ] SnmpCollector - Found "systemMib" VC for "Availability" MF with element: "Availability"
+2018-04-05 10:27:48 [INFO ] SnmpCollector - Found "systemMib" VC for "Reachability" MF with element: "Reachability"
