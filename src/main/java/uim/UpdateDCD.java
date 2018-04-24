@@ -37,15 +37,15 @@ public class UpdateDCD {
     }
 
 
-    public String downloadDCDFromTeamCity () throws Exception {
+    public String downloadDCDFromTeamCity (String username, String password) throws Exception {
 
         Navigation navi = new Navigation (driver);
 
         //Login to teamcity
         log.info("Loggin in to TeamCity.");
         driver.get("http://build.dev.fco/teamcity/viewType.html?buildTypeId=Uim_Snmpc_SnmpDeviceCertificationDeployer_SnmpDeviceCertificationDeployer");
-        driver.findElement(By.id("username")).sendKeys("rimse01");
-        driver.findElement(By.id("password")).sendKeys("6MiniBar37");
+        driver.findElement(By.id("username")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
         driver.findElement(By.xpath("//input[@class='btn loginButton']")).click();
 
         log.debug("Wait while page will be loaded.");
@@ -90,12 +90,12 @@ public class UpdateDCD {
             Thread.sleep(1000);
         }
 
-        // DIRECT DOWNLOAD PROCEDURE. DOES NOT FIT TO REMOTE WEBDRIVER
-        //File dcdAcrhive = new File(dcdDownloadedPath);
-        //URL downloadURL = new URL(url);
-        //Use Authenticator to authenticate user
-        //Authenticator.setDefault(new CustomAuthenticator());
-        //FileUtils.copyURLToFile(downloadURL, dcdAcrhive);
+//        // DIRECT DOWNLOAD PROCEDURE. DOES NOT FIT TO REMOTE WEBDRIVER
+//        File dcdAcrhive = new File(dcdDownloadedPath);
+//        URL downloadURL = new URL(url);
+//        //Use Authenticator to authenticate user
+//        Authenticator.setDefault(new CustomAuthenticator());
+//        FileUtils.copyURLToFile(downloadURL, dcdAcrhive);
 
         log.info("Download completed.");
 

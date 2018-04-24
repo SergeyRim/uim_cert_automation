@@ -16,7 +16,7 @@
     <!-- =================================================== -->
 
     <parameter name="uimServer" value="http://rimse01-F2941" />
-    <!--<parameter name="uimServer" value="http://kucya01-F2257" />-->
+ 
 
      <!--=================================================== -->
      <!--UPDATE DCD -->

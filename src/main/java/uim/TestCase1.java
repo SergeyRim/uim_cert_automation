@@ -1,7 +1,5 @@
 package uim;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,6 +27,9 @@ import org.testng.annotations.*;
 
 public class TestCase1 {
 
+	String version = "3.0.1";
+	String build = "24042018";
+
 	private static final Logger log = LogManager.getLogger("TestCase1");
 	
 	WebDriver driver;
@@ -43,7 +44,7 @@ public class TestCase1 {
 	@Parameters({"Driver", "RemoteDriverURL", "logLevel"})
 	public void beforeSetup(String browserDriver, @Optional("http://127.0.0.1:4444/wd/hub") String RemoteDriverURL, @Optional("") String logLevel) throws MalformedURLException {
 
-		log.info("UIM Cert Automation Testing, version 3.0 (build 05042018)");
+		log.info("UIM Cert Automation Testing, version " + version + " (build " + build + ")");
 		if (!logLevel.equals("") && !logLevel.toLowerCase().equals("info")) {
 
 			LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
@@ -253,8 +254,8 @@ public class TestCase1 {
 
 
 	@Test(description="Update DCD", groups="UpdateDCD")
-	@Parameters({"uimServer", "dcdLocation", "dcdVersion"})
-	public void uploadNewDCD (String uimServer, @Optional String dcdLocation, @Optional String dcdVersion) throws Exception {
+	@Parameters({"uimServer", "username", "password", "dcdLocation", "dcdVersion"})
+	public void uploadNewDCD (String uimServer, String username, String password, @Optional String dcdLocation, @Optional String dcdVersion) throws Exception {
 
 		Navigation navi = new Navigation(driver);
 		UpdateDCD dcd = new UpdateDCD(driver);
@@ -265,7 +266,7 @@ public class TestCase1 {
 		String path2 = matcher.group();
 
 		//Download DCD archive to user workspace directory
-		String downloadedDCD = dcd.downloadDCDFromTeamCity();
+		String downloadedDCD = dcd.downloadDCDFromTeamCity(username, password);
 
 		//Login to Admin console
 		driver.get(uimServer+"/adminconsoleapp");

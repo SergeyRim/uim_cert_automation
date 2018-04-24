@@ -164,8 +164,6 @@ public class Navigation {
 		log.debug("Click on \""+uimServer+"\" robot.");
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='name' and text()='"+uimServer+"']"))).click();
 
-
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='name' and text()='"+uimServer+"']"))).click();
 		Thread.sleep(200);
 
 		//getWebElement("//td[@title='"+uimServer+"' and @data-column='name']").click();
