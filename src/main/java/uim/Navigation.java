@@ -163,11 +163,10 @@ public class Navigation {
 
 		log.debug("Click on \""+uimServer+"\" robot.");
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='name' and text()='"+uimServer+"']"))).click();
-
 		Thread.sleep(200);
 
-		//getWebElement("//td[@title='"+uimServer+"' and @data-column='name']").click();
-		//Thread.sleep(500);
+		log.debug("Waiting for Info page to load.");
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@title='"+uimServer+"']")));
 
 		log.debug("Click on \"Probes\" tab.");
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='btnProbesTab' and @title='Probes']"))).click();

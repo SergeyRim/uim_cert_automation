@@ -11,7 +11,9 @@ public class Runner {
 	public static void main(String[] args) throws IOException {
 
 	    if(args.length != 1) {
-	        System.out.println("Usage : <xmlFile>");
+	        TestCase1 ver = new TestCase1();
+	    	System.out.println("UIM Cert Automation Testing, version " + ver.version + " (build " + ver.build + ")");
+	    	System.out.println("Usage: java -jar UIM_cert.jar <xmlFile>");
 	        System.exit(-1);
 	    }
 

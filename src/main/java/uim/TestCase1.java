@@ -22,13 +22,15 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 
 public class TestCase1 {
 
-	String version = "3.0.1";
-	String build = "24042018";
+	String version = "3.0.3";
+	String build = "10042019";
 
 	private static final Logger log = LogManager.getLogger("TestCase1");
 	
@@ -139,7 +141,7 @@ public class TestCase1 {
 	
 	@AfterMethod(alwaysRun = true)
 	public void afterSetup() {
-		driver.quit();
+		//driver.quit();
 	}
 	
 	
@@ -196,7 +198,8 @@ public class TestCase1 {
 		
 		ArrayList<String[]> vcmfList = new ArrayList<String[]>();
 		vcmfList = parser.getMFVC(readmeFile);
-		
+		Assert.assertNotNull(vcmfList,"Parsed already certified MF/VC");
+
 		
 		//Get substring with UIM server from URL
 		Matcher matcher = Pattern.compile("(?<=http://)(.+)").matcher(uimServer);
@@ -267,6 +270,7 @@ public class TestCase1 {
 
 		//Download DCD archive to user workspace directory
 		String downloadedDCD = dcd.downloadDCDFromTeamCity(username, password);
+
 
 		//Login to Admin console
 		driver.get(uimServer+"/adminconsoleapp");

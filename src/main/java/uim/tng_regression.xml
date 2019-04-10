@@ -15,7 +15,7 @@
     <!-- Parameter "simIDs" format: "zone:id1,zone:id2", for example "public:12345" or "portsmouth:12345"/>  -->
     <!-- =================================================== -->
 
-    <parameter name="uimServer" value="http://rimse01-F2941" />
+    <parameter name="uimServer" value="http://rimse01-F7394" />
  
 
      <!--=================================================== -->

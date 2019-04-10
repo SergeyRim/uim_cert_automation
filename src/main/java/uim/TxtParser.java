@@ -51,24 +51,33 @@ public class TxtParser {
                     	String[] vcmf = new String[4];
                     	//MF in HR format
                     	vcmf[0]=parts2[0].trim();
+						log.debug("MF in HR format is \""+vcmf[0]+"\"");
                     	//MF in mib format
                     	vcmf[1]=parts2[1].trim();
+                    	log.debug("MF in mib format is \""+vcmf[1]+"\"");
                     	
                     	parts1 = lineVC.split("VC:");
                     	parts2 = parts1[1].split("\\|");
                     	//VC in HR format
                     	vcmf[2]=parts2[0].trim();
+                    	log.debug("VC in HR format is \""+vcmf[2]+"\"");
                     	//VC in mib format
                     	vcmf[3]=parts2[1].trim();
-                    	
+                    	log.debug("VC in mib format is \""+vcmf[3]+"\"");
+
+                    	if (vcmf[0].equals("") || vcmf[1].equals("") || vcmf[2].equals("") || vcmf[3].equals("")) {
+                    		throw new IOException("One of the parsed value is empty.");
+						}
+
                     	vcmfList.add(vcmf);
-                    	
             		}
             		
             	}
             }
         } catch (IOException e) {
-            // log error
+            log.error("Error parsing Already Certified MF/VC file.");
+            log.error(e.toString());
+            return null;
         }
 		
 	return vcmfList;
